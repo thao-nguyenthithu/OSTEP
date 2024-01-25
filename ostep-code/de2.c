@@ -25,13 +25,19 @@ int main(){
 		wait(NULL);
 		printf("Cha\n");
 
-		char pid_tokill[100];
 		printf("Nhap PID cua tien trinh can ket thuc: ");
-		fflush(stdin);
-		gets(pid_tokill);
+		//char pid_tokill[100];
+		//fflush(stdin);
+		//gets(pid_tokill);
+		
+		int pid_tokill;
+		scanf("%d",&pid_tokill);
+		// Chuyển đổi PID thành chuỗi sử dụng sprintf
+        	char pid_str[20];
+        	sprintf(pid_str, "%d", pid_tokill);
 
 		//Goi lenh kill -9
-		execlp("kill","kill","-9",pid_tokill, NULL);
+		execlp("kill","kill","-9",pid_str, NULL);
 		
 		//Neu ham execlp that bai thi in ra thong bao sau 
 		printf("\nkill -9 that bai!\n");
