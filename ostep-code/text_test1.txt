@@ -1,0 +1,22 @@
+Đoạn mã trên thực hiện các bước sau đây bằng cách sử dụng hàm fork và execlp:
+
+    Tạo tiến trình con (fork):
+        int pid = fork();: Tạo một tiến trình con bằng cách sử dụng hàm fork.
+        if(pid < 0){...}: Kiểm tra xem quá trình tạo tiến trình con có thành công hay không. Nếu không, in ra thông báo lỗi và thoát khỏi chương trình.
+
+    Tiến trình con:
+        printf("child!\n");: In thông báo là đang ở trong tiến trình con.
+        execlp("ps", "ps", "-a", NULL);: Thực hiện lệnh ps -a bằng hàm execlp. Lệnh này sẽ hiển thị tất cả các tiến trình đang chạy trên hệ thống.
+        printf("\nps -a that bai!\n");: In thông báo lỗi nếu hàm execlp thất bại.
+        exit(0);: Kết thúc tiến trình con.
+
+    Tiến trình cha:
+        wait(NULL);: Đợi cho tiến trình con kết thúc.
+        printf("Cha\n");: In thông báo là đang ở trong tiến trình cha.
+        char pid_tokill[100];: Khai báo một mảng ký tự để lưu trữ PID của tiến trình cần kết thúc.
+        printf("Nhap PID cua tien trinh can ket thuc: ");: In thông báo yêu cầu người dùng nhập PID của tiến trình cần kết thúc.
+        fflush(stdin);: Loại bỏ ký tự dư thừa trong bộ đệm đầu vào (stdin).
+        gets(pid_tokill);: Nhận PID từ người dùng.
+        execlp("kill", "kill", "-9", pid_tokill, NULL);: Thực hiện lệnh kill -9 để kết thúc tiến trình với PID được nhập. Nếu lệnh thất bại, in ra thông báo lỗi.
+        printf("\nkill -9 that bai!\n");: In thông báo lỗi nếu hàm execlp thất bại.
+        exit(0);: Kết thúc tiến trình cha.
