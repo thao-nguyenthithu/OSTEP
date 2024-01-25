@@ -1,0 +1,43 @@
+Dưới đây là giải thích chi tiết:
+
+    char filename[100];: Khai báo một mảng ký tự để lưu trữ tên file.
+
+    int fp[2];: Khai báo một mảng hai phần tử để lưu địa chỉ ống (pipe). fp[0] sẽ được sử dụng để đọc từ ống, và fp[1] sẽ được sử dụng để ghi vào ống.
+
+    if(pipe(fp) == 0) {: Sử dụng hàm pipe để tạo ống và kiểm tra xem quá trình tạo ống có thành công không.
+
+    int pid = fork();: Tạo một tiến trình con bằng cách sử dụng hàm fork.
+
+    if(pid < 0){...}: Kiểm tra xem quá trình tạo tiến trình con có thành công hay không.
+
+    if(pid == 0){...}: Code chạy trong tiến trình con.
+
+        printf("Child\n");: In ra dòng thông báo là đang ở trong tiến trình con.
+
+        printf("Nhap vao ten file khoi tao: ");: In ra thông báo yêu cầu người dùng nhập tên file.
+
+        fflush(stdin);: Loại bỏ ký tự dư thừa trong bộ đệm đầu vào (stdin).
+
+        gets(filename);: Nhận tên file từ người dùng.
+
+        close(fp[0]);: Đóng đầu đọc của ống trong tiến trình con.
+
+        write(fp[1], filename, strlen(filename));: Ghi tên file vào ống để truyền cho tiến trình cha.
+
+        close(fp[1]);: Đóng đầu ghi của ống trong tiến trình con.
+
+        execlp("vim", "vim", filename, NULL);: Thực hiện lệnh vim trong tiến trình con để soạn thảo file. Nếu lệnh thất bại, in ra thông báo lỗi.
+
+        printf("vim loi!\n");: In thông báo lỗi nếu lệnh vim thất bại.
+
+    } else {...}: Code chạy trong tiến trình cha.
+
+        wait(NULL);: Đợi cho tiến trình con kết thúc.
+
+        read(fp[0], filename, sizeof(filename));: Đọc tên file từ ống.
+
+        printf("Cha\n");: In ra thông báo là đang ở trong tiến trình cha.
+
+        execlp("cat", "cat", filename, NULL);: Thực hiện lệnh cat trong tiến trình cha để xem nội dung của file. Nếu lệnh thất bại, in ra thông báo lỗi.
+
+        printf("cat loi\n");: In thông báo lỗi nếu lệnh cat thất bại.
