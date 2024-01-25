@@ -23,14 +23,15 @@ int main(){
 	}else{
 		//Doi tien trinh con ket thuc
 		wait(NULL);
+		printf("Cha\n");
 
-		int pid_tokill;
+		char pid_tokill[100];
 		printf("Nhap PID cua tien trinh can ket thuc: ");
 		fflush(stdin);
-		scanf("%d",&pid_tokill);
+		gets(pid_tokill);
 
 		//Goi lenh kill -9
-		execlp("kill","kill","-9",(char*)pid_tokill, NULL);
+		execlp("kill","kill","-9",pid_tokill, NULL);
 		
 		//Neu ham execlp that bai thi in ra thong bao sau 
 		printf("\nkill -9 that bai!\n");
